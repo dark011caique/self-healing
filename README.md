@@ -13,15 +13,15 @@ Este projeto implementa uma solução de automação de self-healing para reinic
 ## 🚀 Instalação e Configuração
 
 ### 1️⃣ Instale as dependências Python
-cd webhook
-pip install -r requirements.txt
+    cd webhook
+    pip install -r requirements.txt
 
 ### 2️⃣ Rode o webhook Flask
-python app.py --host=0.0.0.0 --port=5000
+    python app.py --host=0.0.0.0 --port=5000
 
 ### 3️⃣ Configure o Ansible (ansible/hosts.ini)
-[linux_host]
-172.18.0.2 ansible_user=root ansible_ssh_private_key_file=~/.ssh/container_key
+    [linux_host]
+    172.18.0.2 ansible_user=root ansible_ssh_private_key_file=~/.ssh/container_key
 
 ### 4️⃣ Playbook de restart (ansible/restart_nginx.yml)
 - name: Reiniciar nginx se estiver parado (compatível com container)
@@ -38,12 +38,12 @@ python app.py --host=0.0.0.0 --port=5000
       when: nginx_status.rc != 0
 
 ### 5️⃣Configure o Script no Zabbix
-mkdir -p /usr/lib/zabbix/alertscripts/
-chmod +x /usr/lib/zabbix/alertscripts/webhook.sh
+    mkdir -p /usr/lib/zabbix/alertscripts/
+    chmod +x /usr/lib/zabbix/alertscripts/webhook.sh
 
 - **Conteúdo do webhook.sh:** 
-#!/bin/sh
-curl -X POST http://<IP_DO_WSL>:5000/self-healing
+    #!/bin/sh
+    curl -X POST http://<IP_DO_WSL>:5000/self-healing
 
 ### 6️⃣ Configuração no Zabbix
 - **Media Type:**
