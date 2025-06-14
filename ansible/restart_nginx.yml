@@ -1,0 +1,12 @@
+- name: Reiniciar nginx se estiver parado (compatível com container)
+  hosts: all
+  become: yes
+  tasks:
+    - name: Verifica se nginx está rodando via processo
+      shell: pgrep nginx
+      register: nginx_status
+      ignore_errors: yes
+
+    - name: Reinicia nginx se necessário
+      shell: nginx
+      when: nginx_status.rc != 0
