@@ -24,18 +24,18 @@ Este projeto implementa uma solução de automação de self-healing para reinic
     172.18.0.2 ansible_user=root ansible_ssh_private_key_file=~/.ssh/container_key
 
 ### 4️⃣ Playbook de restart (ansible/restart_nginx.yml)
-- name: Reiniciar nginx se estiver parado (compatível com container)
-  hosts: all
-  become: yes
-  tasks:
-    - name: Verifica se nginx está rodando via processo
-      shell: pgrep nginx
-      register: nginx_status
-      ignore_errors: yes
+    - name: Reiniciar nginx se estiver parado (compatível com container)
+    hosts: all
+    become: yes
+    tasks:
+        - name: Verifica se nginx está rodando via processo
+        shell: pgrep nginx
+        register: nginx_status
+        ignore_errors: yes
 
-    - name: Reinicia nginx se necessário
-      shell: nginx
-      when: nginx_status.rc != 0
+        - name: Reinicia nginx se necessário
+        shell: nginx
+        when: nginx_status.rc != 0
 
 ### 5️⃣Configure o Script no Zabbix
     mkdir -p /usr/lib/zabbix/alertscripts/
